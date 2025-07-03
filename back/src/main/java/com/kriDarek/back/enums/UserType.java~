@@ -1,0 +1,5 @@
+package com.kriDarek.monolith.enums;
+
+public enum UserType {
+    OWNER, TENANT, 
+}

@@ -1,0 +1,22 @@
+package com.kriDarek.back.exceptions;
+
+import com.kriDarek.monolith.exceptions.property.PropertyNotFoundException;
+import com.kriDarek.monolith.exceptions.user.UserAlreadyExistsException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GeneralExceptionHandler {
+
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException e) {
+        return ResponseEntity.status(409).body(e.getMessage());
+    }
+
+    @ExceptionHandler(PropertyNotFoundException.class)
+    public ResponseEntity<String> handlePropertyNotFoundException(PropertyNotFoundException e) {
+        return ResponseEntity.status(409).body(e.getMessage());
+    }
+}
