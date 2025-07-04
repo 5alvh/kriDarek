@@ -1,0 +1,43 @@
+package com.kriDarek.back.controller;
+
+import com.kriDarek.back.dtos.property.PropertyGetDTO;
+import com.kriDarek.back.services.FavoriteService;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/favorite")
+public class FavoriteController {
+
+    private final FavoriteService favoriteService;
+
+    @Autowired
+    public FavoriteController(FavoriteService favoriteService) {
+        this.favoriteService = favoriteService;
+    }
+
+    @PostMapping("/{propertyId}")
+    public ResponseEntity<Void> addToFavorites(@PathVariable  Long propertyId) {
+        //Instead of 1L, get the id from the principal
+        favoriteService.addToFavorites(1L, propertyId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/my-favorites")
+    public ResponseEntity<List<PropertyGetDTO>> getMyFavorites() {
+        //Instead of 1L, get the id from the principal
+        List<PropertyGetDTO> properties = favoriteService.getUserFavorites(1L);
+        return ResponseEntity.ok(properties);
+    }
+
+    @DeleteMapping("/{propertyId}")
+    public ResponseEntity<Void> removeFromFavorites(@PathVariable Long propertyId) {
+        //Instead of 1L, get the id from the principal
+        favoriteService.removeFromFavorites(1L, propertyId);
+        return ResponseEntity.ok().build();
+    }
+}

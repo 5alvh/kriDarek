@@ -11,11 +11,15 @@ import com.kriDarek.back.repositories.FavoriteRepository;
 import com.kriDarek.back.repositories.PropertyRepository;
 import com.kriDarek.back.repositories.UserRepository;
 import com.kriDarek.back.services.FavoriteService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
+@Transactional
 public class FavoriteServiceImpl implements FavoriteService {
 
     @Autowired
@@ -24,7 +28,9 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Autowired
     private PropertyRepository propertyRepository;
 
+    @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PropertyMapper propertyMapper;
 

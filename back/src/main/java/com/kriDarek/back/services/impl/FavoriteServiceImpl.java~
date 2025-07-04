@@ -1,6 +1,6 @@
 package com.kriDarek.back.services.impl;
 
-import com.kriDarek.back.dtos.property.PropertyDTO;
+import com.kriDarek.back.dtos.property.PropertyGetDTO;
 import com.kriDarek.back.entities.Favorite;
 import com.kriDarek.back.entities.Property;
 import com.kriDarek.back.entities.User;
@@ -12,10 +12,12 @@ import com.kriDarek.back.repositories.PropertyRepository;
 import com.kriDarek.back.repositories.UserRepository;
 import com.kriDarek.back.services.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class FavoriteServiceImpl implements FavoriteService {
 
     @Autowired
@@ -24,7 +26,9 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Autowired
     private PropertyRepository propertyRepository;
 
+    @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PropertyMapper propertyMapper;
 
@@ -49,11 +53,11 @@ public class FavoriteServiceImpl implements FavoriteService {
         favoriteRepository.deleteByUserIdAndPropertyId(userId, propertyId);
     }
 
-    public List<PropertyDTO> getUserFavorites(Long userId) {
+    public List<PropertyGetDTO> getUserFavorites(Long userId) {
         List<Favorite> favorites = favoriteRepository.findByUserIdOrderByCreatedAtDesc(userId);
         return favorites.stream()
                 .map(favorite -> {
-                    PropertyDTO dto = propertyMapper.toDTO(favorite.getProperty());
+                    PropertyGetDTO dto = propertyMapper.toDTO(favorite.getProperty());
                     dto.setIsFavorite(true);
                     return dto;
                 })
