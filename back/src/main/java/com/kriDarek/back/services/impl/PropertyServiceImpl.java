@@ -3,6 +3,7 @@ package com.kriDarek.back.services.impl;
 import com.kriDarek.back.dtos.property.PropertyCreateDTO;
 import com.kriDarek.back.dtos.property.PropertyGetDTO;
 import com.kriDarek.back.dtos.property.PropertySearchDTO;
+import com.kriDarek.back.dtos.property.PropertyUpdateDTO;
 import com.kriDarek.back.entities.Property;
 import com.kriDarek.back.entities.User;
 import com.kriDarek.back.exceptions.user.UserNotFoundException;
@@ -84,11 +85,11 @@ public class PropertyServiceImpl implements PropertyService {
 
     //check if the owner of the property is the same as the user
     @Override
-    public PropertyGetDTO updateProperty(Long id, PropertyGetDTO propertyGetDTO, Long ownerId) {
+    public PropertyGetDTO updateProperty(Long id, PropertyUpdateDTO propertyUpdateDTO, Long ownerId) {
         Property existingProperty = propertyRepository.findById(id)
                 .orElseThrow(() -> new PropertyNotFoundException("Property not found"));
 
-        propertyMapper.updateEntity(propertyGetDTO, existingProperty);
+        propertyMapper.updateEntity(propertyUpdateDTO, existingProperty);
         Property savedProperty = propertyRepository.save(existingProperty);
 
         return propertyMapper.toDTO(savedProperty);

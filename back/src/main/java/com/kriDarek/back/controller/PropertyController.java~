@@ -22,14 +22,14 @@ public class PropertyController {
     }
 
 
-    //Note:Finished V1
+    //Note:Finished
     @PostMapping
     public ResponseEntity<PropertyGetDTO> create(@RequestBody PropertyCreateDTO propertyDTO) {
         //Get the id from the principal
         return ResponseEntity.ok(propertyService.createProperty(propertyDTO, 1L));
     }
 
-    //Note:Finished V1
+    //Note:Finished
     @GetMapping("/{id}")
     public ResponseEntity<PropertyGetDTO> getById(@PathVariable Long id) {
 
@@ -37,21 +37,20 @@ public class PropertyController {
         return ResponseEntity.ok(propertyService.getPropertyById(id, 1L));
     }
 
-    //Note:Finished V1
     @GetMapping("/search")
     public ResponseEntity<Page<PropertyGetDTO>> searchByCriteria(@RequestBody PropertySearchDTO searchDTO, Pageable pageable) {
         //Instead of 1L, get the id from the principal
         return ResponseEntity.ok(propertyService.searchProperties(searchDTO, pageable, 1L));
     }
 
-    //Note:Finished V1
+    //Note:Finished
     @GetMapping("/my-properties")
     public ResponseEntity<List<PropertyGetDTO>> getMyProperties() {
         //Instead of 1L, get the id from the principal
         return ResponseEntity.ok(propertyService.getMyProperties(1L));
     }
 
-    //Note:Finished V1
+    //Note:Finished
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         //Instead of 1L, get the id from the principal

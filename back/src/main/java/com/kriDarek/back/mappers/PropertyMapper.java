@@ -2,6 +2,7 @@ package com.kriDarek.back.mappers;
 
 import com.kriDarek.back.dtos.property.PropertyCreateDTO;
 import com.kriDarek.back.dtos.property.PropertyGetDTO;
+import com.kriDarek.back.dtos.property.PropertyUpdateDTO;
 import com.kriDarek.back.dtos.user.UserDTO;
 import com.kriDarek.back.entities.*;
 import org.springframework.stereotype.Component;
@@ -62,17 +63,17 @@ public class PropertyMapper {
         return propertyImages;
     }
 
-    public void updateEntity(PropertyGetDTO dto, Property property) {
-        property.setTitle(dto.getTitle());
-        property.setDescription(dto.getDescription());
-        property.setPrice(dto.getPrice());
-        property.setType(dto.getType());
-        property.setTransactionType(dto.getTransactionType());
-        property.setBedrooms(dto.getBedrooms());
-        property.setBathrooms(dto.getBathrooms());
-        property.setArea(dto.getArea());
-        property.setYearBuilt(dto.getYearBuilt());
-        property.setAddress(dto.getAddress());
+    public void updateEntity(PropertyUpdateDTO dto, Property property) {
+        property.setTitle(dto.title());
+        property.setDescription(dto.description());
+        property.setPrice(dto.price());
+        property.setType(dto.type());
+        property.setTransactionType(dto.transactionType());
+        property.setBedrooms(dto.bedrooms());
+        property.setBathrooms(dto.bathrooms());
+        property.setArea(dto.area());
+        property.setYearBuilt(dto.yearBuilt());
+        property.setAddress(dto.address());
     }
 
     public List<PropertyGetDTO> toDTOList(List<Property> properties) {
