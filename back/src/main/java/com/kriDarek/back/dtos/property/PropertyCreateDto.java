@@ -1,15 +1,13 @@
 package com.kriDarek.back.dtos.property;
 
-import com.kriDarek.back.dtos.user.UserDTO;
 import com.kriDarek.back.entities.Address;
 import com.kriDarek.back.enums.PropertyType;
 import com.kriDarek.back.enums.TransactionType;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
-public record PropertyCreateDto(
+public record PropertyCreateDTO(
          String title,
          String description,
          BigDecimal price,

@@ -82,7 +82,7 @@ public class PropertyServiceImpl implements PropertyService {
         return propertyMapper.toDTO(savedProperty);
     }
 
-    //check if the owner of the property is the same as the user
+    //check if the owener of the property is the same as the user
     @Override
     public PropertyGetDTO updateProperty(Long id, PropertyGetDTO propertyGetDTO, Long ownerId) {
         Property existingProperty = propertyRepository.findById(id)

@@ -1,19 +1,20 @@
 package com.kriDarek.back.mappers;
 
-import com.kriDarek.back.dtos.property.PropertyCreateDto;
-import com.kriDarek.back.dtos.property.PropertyDTO;
+import com.kriDarek.back.dtos.property.PropertyCreateDTO;
+import com.kriDarek.back.dtos.property.PropertyGetDTO;
 import com.kriDarek.back.dtos.user.UserDTO;
 import com.kriDarek.back.entities.*;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class PropertyMapper {
 
-    public PropertyDTO toDTO(Property property) {
-        PropertyDTO dto = new PropertyDTO();
+    public PropertyGetDTO toDTO(Property property) {
+        PropertyGetDTO dto = new PropertyGetDTO();
         dto.setId(property.getId());
         dto.setTitle(property.getTitle());
         dto.setDescription(property.getDescription());
@@ -32,7 +33,7 @@ public class PropertyMapper {
         return dto;
     }
 
-    public Property toEntity(PropertyCreateDto dto) {
+    public Property toEntity(PropertyCreateDTO dto) {
         Property property = new Property();
         property.setTitle(dto.title());
         property.setDescription(dto.description());
@@ -44,20 +45,24 @@ public class PropertyMapper {
         property.setArea(dto.area());
         property.setYearBuilt(dto.yearBuilt());
         property.setAddress(dto.address());
-        //property.setImages();
+        property.setImages(toImageProperty(dto.images()));
         return property;
     }
 
     public List<PropertyImage> toImageProperty(List<String> images) {
-        return images.stream()
-                .map(image -> {
-                    PropertyImage propertyImage = new PropertyImage();
-                    propertyImage.setImageUrl(image);
-                    return propertyImage;
-                })
-                .collect(Collectors.toList());
+        int i =0;
+        List<PropertyImage> propertyImages = new ArrayList<>();
+        for (String image : images) {
+            PropertyImage propertyImage = new PropertyImage();
+            propertyImage.setImageUrl(image);
+            propertyImage.setOrderIndex(i++);
+            propertyImage.setIsPrimary(i == 0);
+            propertyImages.add(propertyImage);
+        }
+        return propertyImages;
     }
-    public void updateEntity(PropertyDTO dto, Property property) {
+
+    public void updateEntity(PropertyGetDTO dto, Property property) {
         property.setTitle(dto.getTitle());
         property.setDescription(dto.getDescription());
         property.setPrice(dto.getPrice());
@@ -70,7 +75,7 @@ public class PropertyMapper {
         property.setAddress(dto.getAddress());
     }
 
-    public List<PropertyDTO> toDTOList(List<Property> properties) {
+    public List<PropertyGetDTO> toDTOList(List<Property> properties) {
         return properties.stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());

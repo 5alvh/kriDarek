@@ -1,6 +1,6 @@
 package com.kriDarek.back.services.impl;
 
-import com.kriDarek.back.dtos.property.PropertyGetDTO;
+import com.kriDarek.back.dtos.property.PropertyDTO;
 import com.kriDarek.back.entities.Favorite;
 import com.kriDarek.back.entities.Property;
 import com.kriDarek.back.entities.User;
@@ -49,11 +49,11 @@ public class FavoriteServiceImpl implements FavoriteService {
         favoriteRepository.deleteByUserIdAndPropertyId(userId, propertyId);
     }
 
-    public List<PropertyGetDTO> getUserFavorites(Long userId) {
+    public List<PropertyDTO> getUserFavorites(Long userId) {
         List<Favorite> favorites = favoriteRepository.findByUserIdOrderByCreatedAtDesc(userId);
         return favorites.stream()
                 .map(favorite -> {
-                    PropertyGetDTO dto = propertyMapper.toDTO(favorite.getProperty());
+                    PropertyDTO dto = propertyMapper.toDTO(favorite.getProperty());
                     dto.setIsFavorite(true);
                     return dto;
                 })

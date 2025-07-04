@@ -1,15 +1,13 @@
 package com.kriDarek.back.controller;
 
-import com.kriDarek.back.dtos.property.PropertyCreateDto;
-import com.kriDarek.back.dtos.property.PropertyDTO;
-import com.kriDarek.back.entities.Property;
+import com.kriDarek.back.dtos.property.PropertyCreateDTO;
+import com.kriDarek.back.dtos.property.PropertyGetDTO;
+import com.kriDarek.back.dtos.property.PropertySearchDTO;
 import com.kriDarek.back.services.PropertyService;
-import org.apache.coyote.Response;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/property")
@@ -21,9 +19,25 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
 
+
+    //Note:Finished
     @PostMapping
-    public ResponseEntity<PropertyDTO> create(@RequestBody PropertyCreateDto propertyDTO) {
+    public ResponseEntity<PropertyGetDTO> create(@RequestBody PropertyCreateDTO propertyDTO) {
         //Get the id from the principal
         return ResponseEntity.ok(propertyService.createProperty(propertyDTO, 1L));
+    }
+
+    //Note:Finished
+    @GetMapping("/{id}")
+    public ResponseEntity<PropertyGetDTO> getById(@PathVariable Long id) {
+
+        //Instead of 1L, get the id from the principal
+        return ResponseEntity.ok(propertyService.getPropertyById(id, 1L));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<PropertyGetDTO>> searchByCriteria(@RequestBody PropertySearchDTO searchDTO, Pageable pageable) {
+        //Instead of 1L, get the id from the principal
+        return ResponseEntity.ok(propertyService.searchProperties(searchDTO, pageable, 1L));
     }
 }

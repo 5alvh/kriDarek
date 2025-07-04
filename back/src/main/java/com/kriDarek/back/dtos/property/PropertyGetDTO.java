@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PropertyDTO {
+public class PropertyGetDTO {
     private Long id;
     private String title;
     private String description;
